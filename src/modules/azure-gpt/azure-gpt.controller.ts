@@ -56,6 +56,24 @@ export class AzureGptController {
     type: ChatMessageDTO,
   })
   @UsePipes(new ValidationPipe({ transform: true }))
+  @Post('chat-message')
+  async chatMessage(
+    @Res() res: Response,
+    @Body() body: ChatMessageDTO,
+  ): Promise<any> {
+    const stream = await this.azureGptService.chatMessage(body);
+    stream.pipe(res);
+  }
+
+  @ApiOperation({
+    summary: '发送消息(stream)',
+    description: '发送消息(stream)',
+  })
+  @ApiBody({
+    description: '请求参数',
+    type: ChatMessageDTO,
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
   @Post('chat-message-by-stream')
   async chatMessageByStream(
     @Res() res: Response,

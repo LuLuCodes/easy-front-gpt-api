@@ -20,4 +20,4 @@ import { HttpModule } from '@nestjs/axios';
   controllers: [AzureGptController],
   providers: [AzureGptService, CacheService, AzureOpenAiService],
 })
-export class ChatgptModule {}
+export class AzureGptModule {}

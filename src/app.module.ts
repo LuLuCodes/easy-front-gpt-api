@@ -19,7 +19,8 @@ import { AzureOpenAiService } from '@service/azure-openai.service';
 
 import { DBModule } from './db.module';
 import { InitModule } from './init.module';
-import { ChatgptModule } from '@modules/chat-gpt/chat-gpt.module';
+import { ChatGptModule } from '@modules/chat-gpt/chat-gpt.module';
+import { AzureGptModule } from '@modules/azure-gpt/azure-gpt.module';
 import { UserModule } from '@modules/user/user.module';
 import { ApiSchemaModule } from '@modules/api-schema/api-schema.module';
 
@@ -208,7 +209,8 @@ import while_list from '@config/white-list';
     }),
     DBModule,
     InitModule,
-    ChatgptModule,
+    ChatGptModule,
+    AzureGptModule,
     UserModule,
     ApiSchemaModule,
     ScheduleModule.forRoot(),

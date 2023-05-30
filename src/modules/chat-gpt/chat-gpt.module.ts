@@ -20,4 +20,4 @@ import { HttpModule } from '@nestjs/axios';
   controllers: [ChatGptController],
   providers: [ChatGptService, CacheService, OpenAiService],
 })
-export class ChatgptModule {}
+export class ChatGptModule {}

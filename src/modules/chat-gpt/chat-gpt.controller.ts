@@ -48,8 +48,8 @@ export class ChatGptController {
   ) {}
 
   @ApiOperation({
-    summary: '发送消息',
-    description: '发送消息',
+    summary: '发送消息(stream)',
+    description: '发送消息(stream)',
   })
   @ApiBody({
     description: '请求参数',
@@ -62,6 +62,24 @@ export class ChatGptController {
     @Body() body: ChatMessageDTO,
   ): Promise<any> {
     const stream = await this.chatgptService.chatMessageByStream(body);
+    stream.pipe(res);
+  }
+
+  @ApiOperation({
+    summary: '发送消息',
+    description: '发送消息',
+  })
+  @ApiBody({
+    description: '请求参数',
+    type: ChatMessageDTO,
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @Post('chat-message')
+  async chatMessage(
+    @Res() res: Response,
+    @Body() body: ChatMessageDTO,
+  ): Promise<any> {
+    const stream = await this.chatgptService.chatMessage(body);
     stream.pipe(res);
   }
 
