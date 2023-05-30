@@ -26,6 +26,7 @@ import { ApiSchemaModule } from '@modules/api-schema/api-schema.module';
 
 import app_config from '@config/app';
 import openai_config from '@config/openai';
+import azure_openai_config from '@config/azure-openai';
 import databse_config from '@config/mysql';
 import redis_config from '@config/redis';
 import session_config from '@config/session';
@@ -37,6 +38,7 @@ import while_list from '@config/white-list';
       load: [
         app_config,
         openai_config,
+        azure_openai_config,
         databse_config,
         redis_config,
         session_config,

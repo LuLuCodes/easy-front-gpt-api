@@ -32,6 +32,6 @@ export enum OpenAiModel {
 }
 
 export enum AzureOpenAiModel {
-  gpt4 = '2023-03-15-preview',
-  gpt3 = '2023-03-15-preview',
+  'gpt-4' = '2023-03-15-preview',
+  'gpt-3.5-turbo' = '2023-03-15-preview',
 }
