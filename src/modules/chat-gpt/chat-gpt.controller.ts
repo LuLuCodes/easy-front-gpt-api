@@ -75,12 +75,8 @@ export class ChatGptController {
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   @Post('chat-message')
-  async chatMessage(
-    @Res() res: Response,
-    @Body() body: ChatMessageDTO,
-  ): Promise<any> {
-    const stream = await this.chatgptService.chatMessage(body);
-    stream.pipe(res);
+  async chatMessage(@Body() body: ChatMessageDTO): Promise<any> {
+    return await this.chatgptService.chatMessage(body);
   }
 
   @ApiOperation({

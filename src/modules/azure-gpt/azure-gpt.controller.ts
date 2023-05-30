@@ -57,12 +57,8 @@ export class AzureGptController {
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   @Post('chat-message')
-  async chatMessage(
-    @Res() res: Response,
-    @Body() body: ChatMessageDTO,
-  ): Promise<any> {
-    const stream = await this.azureGptService.chatMessage(body);
-    stream.pipe(res);
+  async chatMessage(@Body() body: ChatMessageDTO): Promise<any> {
+    return await this.azureGptService.chatMessage(body);
   }
 
   @ApiOperation({
