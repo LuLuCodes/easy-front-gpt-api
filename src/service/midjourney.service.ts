@@ -39,7 +39,7 @@ export class MidjourneyService {
           accept: 'application/json',
           'content-type': 'application/json',
         },
-        timeout: 60000,
+        timeout: 600000,
       },
     );
     return response.data;

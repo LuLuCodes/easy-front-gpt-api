@@ -59,4 +59,12 @@ export class CreateImageDTO extends BaseDTO {
   @IsOptional()
   @IsString({ message: 'image_id必须为字符串' })
   readonly image_id: string;
+
+  @ApiPropertyOptional({
+    description: '图片比例',
+    type: String,
+  })
+  @IsOptional()
+  @IsString({ message: 'image_id必须为字符串' })
+  readonly ar: string;
 }

@@ -28,28 +28,25 @@ export class PainterService {
   ) {}
 
   async createImage(requestBody: CreateImageDTO): Promise<any> {
-    const { action, prompt, image_id } = requestBody;
+    const { action, prompt, image_id, ar } = requestBody;
 
+    const imageRequest: any = {
+      action,
+    };
     if (action === 'generate') {
       if (!prompt) {
         throw new Error(`prompt can't be empty`);
+      }
+      imageRequest.prompt = prompt;
+      if (ar) {
+        imageRequest.prompt = `${imageRequest.prompt} --ar ${ar}`;
       }
     }
 
     if (action !== 'generate') {
       if (!image_id) {
-        throw new Error(`prompt can't be empty`);
+        throw new Error(`image_id can't be empty`);
       }
-    }
-
-    const imageRequest: any = {
-      action,
-    };
-    if (prompt) {
-      imageRequest.prompt = prompt;
-    }
-
-    if (action !== 'generate') {
       imageRequest.image_id = image_id;
     }
 
