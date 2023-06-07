@@ -16,16 +16,16 @@ import { AzureOpenAiModel } from '@config/global';
 
 @Injectable()
 export class AzureOpenAiService {
-  private readonly open_api_key = '';
-  private readonly open_api_end_point = '';
+  private readonly openai_api_key = '';
+  private readonly openai_api_end_point = '';
 
   constructor(
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
   ) {
-    this.open_api_key = this.configService.get('azure_openai.open_api_key');
-    this.open_api_end_point = this.configService.get(
-      'azure_openai.open_api_end_point',
+    this.openai_api_key = this.configService.get('azure_openai.openai_api_key');
+    this.openai_api_end_point = this.configService.get(
+      'azure_openai.openai_api_end_point',
     );
   }
 
@@ -40,12 +40,12 @@ export class AzureOpenAiService {
     }
     const api_verison = AzureOpenAiModel[model];
     const response = await this.httpService.axiosRef.post(
-      `${this.open_api_end_point}/openai/deployments/chatgpt/chat/completions?api-version=${api_verison}`,
+      `${this.openai_api_end_point}/openai/deployments/chatgpt/chat/completions?api-version=${api_verison}`,
       otherCompletionRequest,
       {
         headers: {
           'Content-Type': 'application/json',
-          'api-key': this.open_api_key,
+          'api-key': this.openai_api_key,
         },
       },
     );
@@ -60,12 +60,12 @@ export class AzureOpenAiService {
     const { model, ...otherCompletionRequest } = completionRequest;
     const api_verison = AzureOpenAiModel[model];
     const response = await this.httpService.axiosRef.post(
-      `${this.open_api_end_point}/openai/deployments/chatgpt/chat/completions?api-version=${api_verison}`,
+      `${this.openai_api_end_point}/openai/deployments/chatgpt/chat/completions?api-version=${api_verison}`,
       otherCompletionRequest,
       {
         headers: {
           'Content-Type': 'application/json',
-          'api-key': this.open_api_key,
+          'api-key': this.openai_api_key,
         },
         responseType: 'stream',
       },

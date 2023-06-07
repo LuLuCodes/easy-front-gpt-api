@@ -11,7 +11,10 @@
 import { envNumber, env } from '@libs/env-unit';
 import { registerAs } from '@nestjs/config';
 
-export default registerAs('openai', () => ({
-  openai_api_key: env('OPENAI_API_KEY', ''),
-  openai_api_end_point: env('OPENAI_API_END_POINT', 'https://api.openai.com'),
+export default registerAs('midjourney', () => ({
+  midjourney_api_key: env('MIDJOURNEY_OPENAI_API_KEY', ''),
+  midjourney_api_end_point: env(
+    'MIDJOURNEY_OPENAI_API_END_POINT',
+    'https://api.zhishuyun.com/midjourney/imagine',
+  ),
 }));

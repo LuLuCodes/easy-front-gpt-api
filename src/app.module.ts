@@ -21,12 +21,14 @@ import { DBModule } from './db.module';
 import { InitModule } from './init.module';
 import { ChatGptModule } from '@modules/chat-gpt/chat-gpt.module';
 import { AzureGptModule } from '@modules/azure-gpt/azure-gpt.module';
+import { PainterModule } from '@modules/painter/painter.module';
 import { UserModule } from '@modules/user/user.module';
 import { ApiSchemaModule } from '@modules/api-schema/api-schema.module';
 
 import app_config from '@config/app';
 import openai_config from '@config/openai';
 import azure_openai_config from '@config/azure-openai';
+import midjourney_config from '@config/midjourney';
 import databse_config from '@config/mysql';
 import redis_config from '@config/redis';
 import session_config from '@config/session';
@@ -39,6 +41,7 @@ import while_list from '@config/white-list';
         app_config,
         openai_config,
         azure_openai_config,
+        midjourney_config,
         databse_config,
         redis_config,
         session_config,
@@ -213,6 +216,7 @@ import while_list from '@config/white-list';
     InitModule,
     ChatGptModule,
     AzureGptModule,
+    PainterModule,
     UserModule,
     ApiSchemaModule,
     ScheduleModule.forRoot(),

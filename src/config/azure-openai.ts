@@ -12,8 +12,8 @@ import { envNumber, env } from '@libs/env-unit';
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('azure_openai', () => ({
-  open_api_key: env('AZURE_OPENAI_API_KEY', ''),
-  open_api_end_point: env(
+  openai_api_key: env('AZURE_OPENAI_API_KEY', ''),
+  openai_api_end_point: env(
     'AZURE_OPENAI_API_END_POINT',
     'https://lulucode-gpt.openai.azure.com',
   ),

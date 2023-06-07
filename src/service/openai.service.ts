@@ -18,19 +18,19 @@ import { OpenAiModel } from '@config/global';
 @Injectable()
 export class OpenAiService {
   private readonly openai: OpenAIApi;
-  private readonly open_api_key = '';
-  private readonly open_api_end_point = '';
+  private readonly openai_api_key = '';
+  private readonly openai_api_end_point = '';
 
   constructor(
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
   ) {
-    this.open_api_key = this.configService.get('openai.open_api_key');
-    this.open_api_end_point = this.configService.get(
-      'openai.open_api_end_point',
+    this.openai_api_key = this.configService.get('openai.openai_api_key');
+    this.openai_api_end_point = this.configService.get(
+      'openai.openai_api_end_point',
     );
     const configuration = new Configuration({
-      apiKey: this.open_api_key,
+      apiKey: this.openai_api_key,
     });
     this.openai = new OpenAIApi(configuration);
   }
@@ -65,12 +65,12 @@ export class OpenAiService {
     completionRequest: any;
   }): Promise<any> {
     const response = await this.httpService.axiosRef.post(
-      `${this.open_api_end_point}/v1/chat/completions`,
+      `${this.openai_api_end_point}/v1/chat/completions`,
       completionRequest,
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.open_api_key}`,
+          Authorization: `Bearer ${this.openai_api_key}`,
         },
         responseType: 'stream',
       },

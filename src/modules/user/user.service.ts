@@ -2,8 +2,8 @@
  * @Author: leyi leyi@myun.info
  * @Date: 2023-03-10 02:34:58
  * @LastEditors: leyi leyi@myun.info
- * @LastEditTime: 2023-03-22 14:12:11
- * @FilePath: /easy-front-gpt-api/src/modules/chatgpt/chatgpt.service.ts
+ * @LastEditTime: 2023-06-03 16:20:25
+ * @FilePath: /easy-front-gpt-api/src/modules/user/user.service.ts
  * @Description:
  *
  * Copyright (c) 2023 by ${git_name_email}, All Rights Reserved.
@@ -71,7 +71,7 @@ export class UserService {
     await this.tAccount.update(
       {
         last_login_time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-        modifier_id: user.id,
+        updated_by: user.id,
       },
       {
         where: {
