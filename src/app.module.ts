@@ -24,6 +24,7 @@ import { AzureGptModule } from '@modules/azure-gpt/azure-gpt.module';
 import { PainterModule } from '@modules/painter/painter.module';
 import { UserModule } from '@modules/user/user.module';
 import { ApiSchemaModule } from '@modules/api-schema/api-schema.module';
+import { DbSchemaModule } from '@modules/db-schema/db-schema.module';
 
 import app_config from '@config/app';
 import openai_config from '@config/openai';
@@ -219,6 +220,7 @@ import while_list from '@config/white-list';
     PainterModule,
     UserModule,
     ApiSchemaModule,
+    DbSchemaModule,
     ScheduleModule.forRoot(),
   ],
   providers: [
