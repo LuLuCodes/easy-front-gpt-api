@@ -20,7 +20,7 @@ import * as _ from 'lodash';
 import * as dayjs from 'dayjs';
 import { HttpModule, HttpService } from '@nestjs/axios';
 
-import { TestMySqlConnectDTO } from './db-schema.dto';
+import { MySqlConnectDTO } from './db-schema.dto';
 
 @Injectable()
 export class DbSchemaService {
@@ -33,14 +33,34 @@ export class DbSchemaService {
     private openAiService: OpenAiService,
   ) {}
 
-  async testMysqlConnect(requestBody: TestMySqlConnectDTO): Promise<any> {
-    const { db_config } = requestBody;
+  getConnection(db_config) {
     const sequelize = new Sequelize({
       dialect: 'mysql',
       ...db_config,
     });
 
-    await sequelize.authenticate();
-    await sequelize.close();
+    return sequelize;
+  }
+
+  async testMysqlConnect(requestBody: MySqlConnectDTO): Promise<any> {
+    const { db_config } = requestBody;
+    const conn = this.getConnection(db_config);
+
+    await conn.authenticate();
+    await conn.close();
+  }
+
+  async getTables(requestBody: MySqlConnectDTO) {
+    const { db_config } = requestBody;
+    const conn = this.getConnection(db_config);
+    const query = `SELECT TABLE_NAME as table_name FROM information_schema.tables WHERE TABLE_SCHEMA=:database AND TABLE_TYPE='BASE TABLE';`;
+    const tables_name: any = await conn.query(query, {
+      replacements: {
+        database: db_config.database,
+      },
+      type: QueryTypes.SELECT,
+      raw: true,
+    });
+    return tables_name;
   }
 }

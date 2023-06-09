@@ -25,7 +25,7 @@ import { ValidationPipe } from '@pipe/validation.pipe';
 import { CacheService } from '@service/cache.service';
 import { DbSchemaService } from './db-schema.service';
 
-import { TestMySqlConnectDTO } from './db-schema.dto';
+import { MySqlConnectDTO } from './db-schema.dto';
 
 @ApiTags('DB Schema API')
 @ApiHeader({
@@ -51,12 +51,27 @@ export class DbSchemaController {
   })
   @ApiBody({
     description: '请求参数',
-    type: TestMySqlConnectDTO,
+    type: MySqlConnectDTO,
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   @Post('test-mysql-connect')
-  async testMysqlConnect(@Body() body: TestMySqlConnectDTO): Promise<any> {
+  async testMysqlConnect(@Body() body: MySqlConnectDTO): Promise<any> {
     const response = await this.dbSchemaService.testMysqlConnect(body);
+    return response;
+  }
+
+  @ApiOperation({
+    summary: '获取数据库表',
+    description: '获取数据库表',
+  })
+  @ApiBody({
+    description: '请求参数',
+    type: MySqlConnectDTO,
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @Post('get-tables')
+  async getTables(@Body() body: MySqlConnectDTO): Promise<any> {
+    const response = await this.dbSchemaService.getTables(body);
     return response;
   }
 }

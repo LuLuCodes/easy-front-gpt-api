@@ -72,7 +72,7 @@ export class MySqlConnectConfig {
   readonly password: string;
 }
 
-export class TestMySqlConnectDTO extends BaseDTO {
+export class MySqlConnectDTO extends BaseDTO {
   @ApiProperty({
     description: '数据库连接配置',
     type: MySqlConnectConfig,
