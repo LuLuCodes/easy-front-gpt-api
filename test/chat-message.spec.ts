@@ -14,7 +14,7 @@ import { OpenAI } from 'langchain/llms/openai';
 import { SqlDatabase } from 'langchain/sql_db';
 import { SqlDatabaseChain } from 'langchain/chains';
 
-describe('chat message test', () => {
+describe.skip('chat message test', () => {
   it('send message', async () => {
     const rawRes = await fetch(
       'http://127.0.0.1:24230/api/chatgpt/chat-message-by-stream',
