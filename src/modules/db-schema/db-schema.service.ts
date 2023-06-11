@@ -20,7 +20,7 @@ import * as _ from 'lodash';
 import * as dayjs from 'dayjs';
 import { HttpModule, HttpService } from '@nestjs/axios';
 
-import { MySqlConnectDTO } from './db-schema.dto';
+import { MySqlConnectDTO, GetTableStructureBatchDTO } from './db-schema.dto';
 
 @Injectable()
 export class DbSchemaService {
@@ -43,24 +43,68 @@ export class DbSchemaService {
   }
 
   async testMysqlConnect(requestBody: MySqlConnectDTO): Promise<any> {
-    const { db_config } = requestBody;
-    const conn = this.getConnection(db_config);
-
-    await conn.authenticate();
-    await conn.close();
+    let conn = null;
+    try {
+      const { db_config } = requestBody;
+      conn = this.getConnection(db_config);
+      await conn.authenticate();
+    } catch (error) {
+      throw error;
+    } finally {
+      if (conn) {
+        await conn.close();
+        conn = null;
+      }
+    }
   }
 
-  async getTables(requestBody: MySqlConnectDTO) {
-    const { db_config } = requestBody;
-    const conn = this.getConnection(db_config);
-    const query = `SELECT TABLE_NAME as table_name FROM information_schema.tables WHERE TABLE_SCHEMA=:database AND TABLE_TYPE='BASE TABLE';`;
-    const tables_name: any = await conn.query(query, {
-      replacements: {
-        database: db_config.database,
-      },
-      type: QueryTypes.SELECT,
-      raw: true,
-    });
-    return tables_name;
+  async getTableName(requestBody: MySqlConnectDTO) {
+    let conn = null;
+    try {
+      const { db_config } = requestBody;
+      conn = this.getConnection(db_config);
+      const query = `SELECT TABLE_NAME as table_name FROM information_schema.tables WHERE TABLE_SCHEMA=:database AND TABLE_TYPE='BASE TABLE';`;
+      const tables_name: any = await conn.query(query, {
+        replacements: {
+          database: db_config.database,
+        },
+        type: QueryTypes.SELECT,
+        raw: true,
+      });
+      return tables_name;
+    } catch (error) {
+      throw error;
+    } finally {
+      if (conn) {
+        await conn.close();
+        conn = null;
+      }
+    }
+  }
+
+  async getTableStructureBatch(requestBody: GetTableStructureBatchDTO) {
+    let conn = null;
+    try {
+      const { db_config, table_name_list } = requestBody;
+      conn = this.getConnection(db_config);
+
+      const promise = table_name_list.map(async (table_name) => {
+        const [rows] = await conn.query(
+          `SHOW CREATE TABLE \`${db_config.database}\`.\`${table_name}\`;`,
+        );
+        if (rows.length < 1) {
+          throw new Error('Unexpected number of rows.');
+        }
+        return { table_name, structure: rows[0]['Create Table'] };
+      });
+      return await Promise.all(promise);
+    } catch (error) {
+      throw error;
+    } finally {
+      if (conn) {
+        await conn.close();
+        conn = null;
+      }
+    }
   }
 }

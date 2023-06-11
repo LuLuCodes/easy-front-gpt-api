@@ -81,3 +81,20 @@ export class MySqlConnectDTO extends BaseDTO {
   @Type(() => MySqlConnectConfig)
   readonly db_config: MySqlConnectConfig;
 }
+
+export class GetTableStructureBatchDTO extends BaseDTO {
+  @ApiProperty({
+    description: '数据库连接配置',
+    type: MySqlConnectConfig,
+  })
+  @ValidateNested({ each: true })
+  @Type(() => MySqlConnectConfig)
+  readonly db_config: MySqlConnectConfig;
+
+  @ApiProperty({
+    description: '数据库表名数组',
+    type: [String],
+  })
+  @IsArray({ message: 'table_name_list必须是数组' })
+  readonly table_name_list: string[];
+}

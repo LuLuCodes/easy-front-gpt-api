@@ -25,7 +25,7 @@ import { ValidationPipe } from '@pipe/validation.pipe';
 import { CacheService } from '@service/cache.service';
 import { DbSchemaService } from './db-schema.service';
 
-import { MySqlConnectDTO } from './db-schema.dto';
+import { MySqlConnectDTO, GetTableStructureBatchDTO } from './db-schema.dto';
 
 @ApiTags('DB Schema API')
 @ApiHeader({
@@ -61,17 +61,34 @@ export class DbSchemaController {
   }
 
   @ApiOperation({
-    summary: '获取数据库表',
-    description: '获取数据库表',
+    summary: '获取数据库表名',
+    description: '获取数据库表名',
   })
   @ApiBody({
     description: '请求参数',
     type: MySqlConnectDTO,
   })
   @UsePipes(new ValidationPipe({ transform: true }))
-  @Post('get-tables')
+  @Post('get-table-name')
   async getTables(@Body() body: MySqlConnectDTO): Promise<any> {
-    const response = await this.dbSchemaService.getTables(body);
+    const response = await this.dbSchemaService.getTableName(body);
+    return response;
+  }
+
+  @ApiOperation({
+    summary: '批量获取数据库表结构',
+    description: '批量获取数据库表结构',
+  })
+  @ApiBody({
+    description: '请求参数',
+    type: GetTableStructureBatchDTO,
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @Post('get-table-structure-batch')
+  async getTableStructureBatch(
+    @Body() body: GetTableStructureBatchDTO,
+  ): Promise<any> {
+    const response = await this.dbSchemaService.getTableStructureBatch(body);
     return response;
   }
 }
