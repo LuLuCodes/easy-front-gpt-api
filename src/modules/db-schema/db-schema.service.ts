@@ -20,7 +20,11 @@ import * as _ from 'lodash';
 import * as dayjs from 'dayjs';
 import { HttpModule, HttpService } from '@nestjs/axios';
 
-import { MySqlConnectDTO, GetTableStructureBatchDTO } from './db-schema.dto';
+import {
+  MySqlConnectDTO,
+  GetTableStructureBatchDTO,
+  ExecSqlDTO,
+} from './db-schema.dto';
 
 @Injectable()
 export class DbSchemaService {
@@ -98,6 +102,36 @@ export class DbSchemaService {
         return { table_name, structure: rows[0]['Create Table'] };
       });
       return await Promise.all(promise);
+    } catch (error) {
+      throw error;
+    } finally {
+      if (conn) {
+        await conn.close();
+        conn = null;
+      }
+    }
+  }
+
+  async execSql(requestBody: ExecSqlDTO) {
+    let conn = null;
+    try {
+      const { db_config, exec_sql } = requestBody;
+      conn = this.getConnection(db_config);
+      const upper_exec_sql = exec_sql.toUpperCase();
+      let sql_type = QueryTypes.SELECT;
+      if (upper_exec_sql.startsWith(QueryTypes.SELECT)) {
+        sql_type = QueryTypes.SELECT;
+      } else if (upper_exec_sql.startsWith(QueryTypes.INSERT)) {
+        sql_type = QueryTypes.INSERT;
+      } else if (upper_exec_sql.startsWith(QueryTypes.UPDATE)) {
+        sql_type = QueryTypes.UPDATE;
+      } else if (upper_exec_sql.startsWith(QueryTypes.DELETE)) {
+        sql_type = QueryTypes.DELETE;
+      }
+      return await conn.query(exec_sql, {
+        type: sql_type,
+        raw: true,
+      });
     } catch (error) {
       throw error;
     } finally {

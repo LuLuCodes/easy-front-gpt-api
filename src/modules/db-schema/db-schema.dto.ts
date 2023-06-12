@@ -98,3 +98,21 @@ export class GetTableStructureBatchDTO extends BaseDTO {
   @IsArray({ message: 'table_name_list必须是数组' })
   readonly table_name_list: string[];
 }
+
+export class ExecSqlDTO extends BaseDTO {
+  @ApiProperty({
+    description: '数据库连接配置',
+    type: MySqlConnectConfig,
+  })
+  @ValidateNested({ each: true })
+  @Type(() => MySqlConnectConfig)
+  readonly db_config: MySqlConnectConfig;
+
+  @ApiProperty({
+    description: '执行Sql语句',
+    type: String,
+  })
+  @IsNotEmpty({ message: 'exec_sql不能为空' })
+  @IsString({ message: 'exec_sql必须为字符串' })
+  readonly exec_sql: string;
+}

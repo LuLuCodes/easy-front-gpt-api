@@ -25,7 +25,11 @@ import { ValidationPipe } from '@pipe/validation.pipe';
 import { CacheService } from '@service/cache.service';
 import { DbSchemaService } from './db-schema.service';
 
-import { MySqlConnectDTO, GetTableStructureBatchDTO } from './db-schema.dto';
+import {
+  MySqlConnectDTO,
+  GetTableStructureBatchDTO,
+  ExecSqlDTO,
+} from './db-schema.dto';
 
 @ApiTags('DB Schema API')
 @ApiHeader({
@@ -89,6 +93,21 @@ export class DbSchemaController {
     @Body() body: GetTableStructureBatchDTO,
   ): Promise<any> {
     const response = await this.dbSchemaService.getTableStructureBatch(body);
+    return response;
+  }
+
+  @ApiOperation({
+    summary: '执行sql',
+    description: '执行sql',
+  })
+  @ApiBody({
+    description: '请求参数',
+    type: ExecSqlDTO,
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @Post('exec-sql')
+  async execSql(@Body() body: ExecSqlDTO): Promise<any> {
+    const response = await this.dbSchemaService.execSql(body);
     return response;
   }
 }
