@@ -118,7 +118,7 @@ export class DbSchemaService {
       const { db_config, exec_sql } = requestBody;
       conn = this.getConnection(db_config);
       const upper_exec_sql = exec_sql.toUpperCase();
-      let sql_type = QueryTypes.SELECT;
+      let sql_type = '';
       if (upper_exec_sql.startsWith(QueryTypes.SELECT)) {
         sql_type = QueryTypes.SELECT;
       } else if (upper_exec_sql.startsWith(QueryTypes.INSERT)) {
@@ -128,8 +128,13 @@ export class DbSchemaService {
       } else if (upper_exec_sql.startsWith(QueryTypes.DELETE)) {
         sql_type = QueryTypes.DELETE;
       }
+      if (sql_type) {
+        return await conn.query(exec_sql, {
+          type: sql_type,
+          raw: true,
+        });
+      }
       return await conn.query(exec_sql, {
-        type: sql_type,
         raw: true,
       });
     } catch (error) {
