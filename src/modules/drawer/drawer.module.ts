@@ -9,15 +9,15 @@
  * Copyright (c) 2023 by ${git_name_email}, All Rights Reserved.
  */
 import { Module } from '@nestjs/common';
-import { PainterController } from './painter.controller';
-import { PainterService } from './painter.service';
+import { DrawerController } from './drawer.controller';
+import { DrawerService } from './drawer.service';
 import { CacheService } from '@service/cache.service';
 import { MidjourneyService } from '@service/midjourney.service';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [HttpModule],
-  controllers: [PainterController],
-  providers: [PainterService, CacheService, MidjourneyService],
+  controllers: [DrawerController],
+  providers: [DrawerService, CacheService, MidjourneyService],
 })
-export class PainterModule {}
+export class DrawerModule {}

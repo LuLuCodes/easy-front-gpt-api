@@ -16,11 +16,11 @@ import { CacheService } from '@service/cache.service';
 import { MidjourneyService } from '@service/midjourney.service';
 import { ConfigService } from '@nestjs/config';
 import { OpenAiModel } from '@config/global';
-import { CreateImageDTO } from './painter.dto';
+import { CreateImageDTO } from './drawer.dto';
 import * as _ from 'lodash';
 
 @Injectable()
-export class PainterService {
+export class DrawerService {
   constructor(
     private readonly configService: ConfigService,
     private cacheService: CacheService,

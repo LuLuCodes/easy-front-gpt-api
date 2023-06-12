@@ -25,11 +25,11 @@ import { ConfigService } from '@nestjs/config';
 import { ApiTags, ApiBody, ApiOperation, ApiHeader } from '@nestjs/swagger';
 import { ValidationPipe } from '@pipe/validation.pipe';
 import { CacheService } from '@service/cache.service';
-import { PainterService } from './painter.service';
+import { DrawerService } from './drawer.service';
 
-import { CreateImageDTO } from './painter.dto';
+import { CreateImageDTO } from './drawer.dto';
 
-@ApiTags('Painter API')
+@ApiTags('Drawer API')
 @ApiHeader({
   name: 'x-from-swagger',
   description: '如果是swagger发送的请求，会跳过token和sign验证',
@@ -39,12 +39,12 @@ import { CreateImageDTO } from './painter.dto';
     example: 'swagger',
   },
 })
-@Controller('painter')
-export class PainterController {
+@Controller('drawer')
+export class DrawerController {
   constructor(
     private readonly cacheService: CacheService,
     private readonly configService: ConfigService,
-    private readonly painterService: PainterService,
+    private readonly drawerService: DrawerService,
   ) {}
 
   @ApiOperation({
@@ -58,6 +58,6 @@ export class PainterController {
   @UsePipes(new ValidationPipe({ transform: true }))
   @Post('create-image')
   async createImage(@Body() body: CreateImageDTO): Promise<any> {
-    return await this.painterService.createImage(body);
+    return await this.drawerService.createImage(body);
   }
 }

@@ -21,7 +21,7 @@ import { DBModule } from './db.module';
 import { InitModule } from './init.module';
 import { ChatGptModule } from '@modules/chat-gpt/chat-gpt.module';
 import { AzureGptModule } from '@modules/azure-gpt/azure-gpt.module';
-import { PainterModule } from '@modules/painter/painter.module';
+import { DrawerModule } from '@modules/drawer/drawer.module';
 import { UserModule } from '@modules/user/user.module';
 import { ApiSchemaModule } from '@modules/api-schema/api-schema.module';
 import { DbSchemaModule } from '@modules/db-schema/db-schema.module';
@@ -217,7 +217,7 @@ import while_list from '@config/white-list';
     InitModule,
     ChatGptModule,
     AzureGptModule,
-    PainterModule,
+    DrawerModule,
     UserModule,
     ApiSchemaModule,
     DbSchemaModule,
