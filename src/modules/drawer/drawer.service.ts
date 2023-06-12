@@ -28,7 +28,16 @@ export class DrawerService {
   ) {}
 
   async createImage(requestBody: CreateImageDTO): Promise<any> {
-    const { action, prompt, image_id, ar } = requestBody;
+    const {
+      action,
+      prompt,
+      image_id,
+      version,
+      chaos,
+      stylize,
+      quality,
+      aspect,
+    } = requestBody;
 
     const imageRequest: any = {
       action,
@@ -37,10 +46,7 @@ export class DrawerService {
       if (!prompt) {
         throw new Error(`prompt can't be empty`);
       }
-      imageRequest.prompt = prompt;
-      if (ar) {
-        imageRequest.prompt = `${imageRequest.prompt} --ar ${ar}`;
-      }
+      imageRequest.prompt = `${prompt} --version ${version} --chaos ${chaos} --stylize ${stylize} --quality ${quality} --aspect ${aspect}`;
     }
 
     if (action !== 'generate') {
