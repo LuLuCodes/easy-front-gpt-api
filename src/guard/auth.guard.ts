@@ -52,7 +52,7 @@ export class AuthGuard implements CanActivate {
       }
     }
     if (!authToken) {
-      throw new HttpException('缺少authToken', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('用户未登录', HttpStatus.UNAUTHORIZED);
     }
     const session_key = this.configService.get('session.key');
     const token_str = `${session_key}${JSON.stringify({
