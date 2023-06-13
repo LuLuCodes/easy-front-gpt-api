@@ -11,6 +11,11 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('while_list', () => ({
-  token: ['/api/oss/upload-oss', '/api/user/login', '/api/user/get-session'],
-  sign: ['/api/oss/upload-oss'],
+  token: [
+    '/api/oss/upload-oss',
+    '/api/user/login',
+    '/api/user/get-session',
+    '/api/drawer/create-image-callback',
+  ],
+  sign: ['/api/oss/upload-oss', '/api/drawer/create-image-callback'],
 }));

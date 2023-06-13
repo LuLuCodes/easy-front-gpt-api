@@ -60,4 +60,13 @@ export class DrawerController {
   async createImage(@Body() body: CreateImageDTO): Promise<any> {
     return await this.drawerService.createImage(body);
   }
+
+  @ApiOperation({
+    summary: '作图',
+    description: '作图',
+  })
+  @Post('create-image-callback')
+  async createImageCallback(@Body() body): Promise<any> {
+    console.log(body);
+  }
 }

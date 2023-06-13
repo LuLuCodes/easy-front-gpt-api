@@ -21,11 +21,16 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class DrawerService {
+  private readonly midjourney_callback_url = '';
   constructor(
     private readonly configService: ConfigService,
     private cacheService: CacheService,
     private midjourneyService: MidjourneyService,
-  ) {}
+  ) {
+    this.midjourney_callback_url = this.configService.get(
+      'midjourney.midjourney_callback_url',
+    );
+  }
 
   async createImage(requestBody: CreateImageDTO): Promise<any> {
     const {
@@ -55,7 +60,9 @@ export class DrawerService {
       }
       imageRequest.image_id = image_id;
     }
-
+    if (this.midjourney_callback_url) {
+      imageRequest.callback_url = this.midjourney_callback_url;
+    }
     return await this.midjourneyService.createImage({
       imageRequest,
     });

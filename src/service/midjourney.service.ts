@@ -15,8 +15,8 @@ import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class MidjourneyService {
-  private readonly midjourney_api_key = '';
-  private readonly midjourney_api_end_point = '';
+  private midjourney_api_key = '';
+  private midjourney_api_end_point = '';
 
   constructor(
     private readonly configService: ConfigService,

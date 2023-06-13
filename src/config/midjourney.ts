@@ -17,4 +17,5 @@ export default registerAs('midjourney', () => ({
     'MIDJOURNEY_OPENAI_API_END_POINT',
     'https://api.zhishuyun.com/midjourney/imagine',
   ),
+  midjourney_callback_url: env('MIDJOURNEY_CALL_BACK_URL', ''),
 }));
