@@ -70,6 +70,15 @@ export class CreateImageDTO extends BaseDTO {
   readonly version = 5;
 
   @ApiPropertyOptional({
+    description: 'midjourney二次元',
+    type: Number,
+  })
+  @IsOptional()
+  @IsInt({ message: 'niji必须为必须为有效整数' })
+  @Min(0, { message: 'niji应大于等于0' })
+  readonly niji = 5;
+
+  @ApiPropertyOptional({
     description:
       'midjourney混乱值，高混乱值将产生更多不寻常和意想不到的结果和组合。较低的混乱值具有更可靠、可重复的结果。',
     type: Number,
