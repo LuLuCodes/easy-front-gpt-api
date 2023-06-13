@@ -31,17 +31,25 @@ export class MidjourneyService {
   }
 
   async createImage({ imageRequest }: { imageRequest: any }): Promise<any> {
-    const response = await this.httpService.axiosRef.post(
-      `${this.midjourney_api_end_point}?token=${this.midjourney_api_key}`,
-      { ...imageRequest, timeout: 600 },
-      {
-        headers: {
-          accept: 'application/json',
-          'content-type': 'application/json',
+    try {
+      const response = await this.httpService.axiosRef.post(
+        `${this.midjourney_api_end_point}?token=${this.midjourney_api_key}`,
+        { ...imageRequest, timeout: 600 },
+        {
+          headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+          },
+          timeout: 600000,
         },
-        timeout: 600000,
-      },
-    );
-    return response.data;
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(
+        `midjourney api error: ${
+          error.response?.data?.detail ?? error.message
+        }`,
+      );
+    }
   }
 }
