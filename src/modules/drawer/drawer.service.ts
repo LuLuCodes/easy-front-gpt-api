@@ -43,6 +43,7 @@ export class DrawerService {
       quality,
       aspect,
       niji,
+      iw,
     } = requestBody;
 
     let quality_str = `${quality}` || '1';
@@ -56,7 +57,7 @@ export class DrawerService {
         throw new Error(`prompt can't be empty`);
       }
       if (version && !niji) {
-        imageRequest.prompt = `${prompt} --version ${version} --chaos ${chaos} --stylize ${stylize} --quality ${quality_str} --aspect ${aspect}`;
+        imageRequest.prompt = `${prompt} --version ${version} --chaos ${chaos} --stylize ${stylize} --quality ${quality_str} --aspect ${aspect} --iw ${iw}`;
       }
       if (niji) {
         imageRequest.prompt = `${prompt} --chaos ${chaos} --stylize ${stylize} --quality ${quality_str} --aspect ${aspect} --niji ${niji}`;

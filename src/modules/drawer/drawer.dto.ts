@@ -116,6 +116,21 @@ export class CreateImageDTO extends BaseDTO {
   readonly quality = 1;
 
   @ApiPropertyOptional({
+    description: 'midjourney图片权重，以图生图中，权重越大，越接近原图',
+    type: Number,
+  })
+  @IsOptional()
+  @IsNumber(
+    {
+      allowNaN: false,
+      allowInfinity: false,
+      maxDecimalPlaces: 2,
+    },
+    { message: 'quality必须是数字，最多2位小数' },
+  )
+  readonly iw = 1;
+
+  @ApiPropertyOptional({
     description: '图片比例',
     type: String,
   })
