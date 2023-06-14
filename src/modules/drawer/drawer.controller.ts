@@ -62,8 +62,26 @@ export class DrawerController {
   }
 
   @ApiOperation({
-    summary: '作图',
-    description: '作图',
+    summary: '作图（流方式）',
+    description: '作图（流方式）',
+  })
+  @ApiBody({
+    description: '请求参数',
+    type: CreateImageDTO,
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @Post('create-image-by-stream')
+  async createImageByStream(
+    @Res() res: Response,
+    @Body() body: CreateImageDTO,
+  ): Promise<any> {
+    const stream = await this.drawerService.createImageByStream(body);
+    stream.pipe(res);
+  }
+
+  @ApiOperation({
+    summary: '作图回调通知',
+    description: '作图回调通知',
   })
   @Post('create-image-callback')
   async createImageCallback(@Body() body): Promise<any> {

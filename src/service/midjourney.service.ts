@@ -2,8 +2,8 @@
  * @Author: leyi leyi@myun.info
  * @Date: 2023-04-07 17:01:31
  * @LastEditors: leyi leyi@myun.info
- * @LastEditTime: 2023-05-24 17:26:32
- * @FilePath: /easy-front-gpt-api/src/service/openai.service.ts
+ * @LastEditTime: 2023-06-14 13:53:05
+ * @FilePath: /easy-front-gpt-api/src/service/midjourney.service.ts
  * @Description:
  *
  * Copyright (c) 2023 by ${git_name_email}, All Rights Reserved.
@@ -45,6 +45,36 @@ export class MidjourneyService {
       );
       return response.data;
     } catch (error) {
+      throw new Error(
+        `midjourney api error: ${
+          error.response?.data?.detail ?? error.message
+        }`,
+      );
+    }
+  }
+
+  async createImageByStream({
+    imageRequest,
+  }: {
+    imageRequest: any;
+  }): Promise<any> {
+    try {
+      console.log(imageRequest);
+      const response = await this.httpService.axiosRef.post(
+        `${this.midjourney_api_end_point}?token=${this.midjourney_api_key}`,
+        { ...imageRequest, timeout: 600 },
+        {
+          headers: {
+            accept: 'application/x-ndjson',
+            'content-type': 'application/json',
+          },
+          responseType: 'stream',
+          timeout: 600000,
+        },
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
       throw new Error(
         `midjourney api error: ${
           error.response?.data?.detail ?? error.message

@@ -2,8 +2,8 @@
  * @Author: leyi leyi@myun.info
  * @Date: 2023-03-10 02:34:58
  * @LastEditors: leyi leyi@myun.info
- * @LastEditTime: 2023-05-30 10:50:39
- * @FilePath: /easy-front-gpt-api/src/modules/azure-gpt/azure-gpt.service.ts
+ * @LastEditTime: 2023-06-14 13:33:22
+ * @FilePath: /easy-front-gpt-api/src/modules/drawer/drawer.service.ts
  * @Description:
  *
  * Copyright (c) 2023 by ${git_name_email}, All Rights Reserved.
@@ -32,7 +32,7 @@ export class DrawerService {
     );
   }
 
-  async createImage(requestBody: CreateImageDTO): Promise<any> {
+  private getMidjourneyPrompt(requestBody: CreateImageDTO) {
     const {
       action,
       prompt,
@@ -72,7 +72,19 @@ export class DrawerService {
     if (this.midjourney_callback_url) {
       imageRequest.callback_url = this.midjourney_callback_url;
     }
+    return imageRequest;
+  }
+
+  async createImage(requestBody: CreateImageDTO): Promise<any> {
+    const imageRequest = this.getMidjourneyPrompt(requestBody);
     return await this.midjourneyService.createImage({
+      imageRequest,
+    });
+  }
+
+  async createImageByStream(requestBody: CreateImageDTO): Promise<any> {
+    const imageRequest = this.getMidjourneyPrompt(requestBody);
+    return await this.midjourneyService.createImageByStream({
       imageRequest,
     });
   }
